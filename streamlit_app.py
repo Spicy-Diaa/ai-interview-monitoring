@@ -1,7 +1,6 @@
 import os
 import threading
 import time
-
 import av
 import cv2
 import mediapipe as mp
@@ -152,7 +151,7 @@ const btn = document.getElementById("btn");
 const statusEl = document.getElementById("status");
 const linesEl = document.getElementById("lines");
 const interimEl = document.getElementById("interim");
-let rec = null, active = false;
+let rec = null, active = false, running = false;
 
 function setStatus(t) { statusEl.textContent = t; }
 
@@ -166,13 +165,15 @@ function addLine(text) {
   linesEl.parentElement.scrollTop = linesEl.parentElement.scrollHeight;
 }
 
-function start() {
-  if (!SR) { setStatus("المتصفح لا يدعم التعرف على الكلام. استخدم Chrome أو Edge."); return; }
+// Chrome ends a listening session every now and then (silence, time limit, network).
+// So we create a fresh recognizer and start it again whenever it ends.
+function startSession() {
+  if (!active || running) return;
   rec = new SR();
   rec.lang = "__LANG__";
   rec.continuous = true;
   rec.interimResults = true;
-  rec.onstart = () => setStatus("🎤 يستمع... اتكلم");
+  rec.onstart = () => { running = true; setStatus("🎤 يستمع... اتكلم"); };
   rec.onresult = (e) => {
     let interim = "";
     for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -183,22 +184,26 @@ function start() {
     interimEl.textContent = interim;
   };
   rec.onerror = (e) => {
+    if (e.error === "no-speech" || e.error === "aborted") return;   // normal, restarts below
     setStatus("خطأ: " + e.error);
     if (e.error === "not-allowed" || e.error === "service-not-allowed") active = false;
   };
   rec.onend = () => {
+    running = false;
     interimEl.textContent = "";
-    if (active) { try { rec.start(); } catch (_) {} }
+    if (active) setTimeout(startSession, 300);
     else { setStatus("متوقف"); btn.textContent = "ابدأ تحويل الكلام إلى نص"; }
   };
-  active = true;
-  btn.textContent = "إيقاف";
-  rec.start();
+  try { rec.start(); } catch (_) { running = false; }
 }
 
+// safety net: if the session died without telling us, start it again
+setInterval(() => { if (active && !running) startSession(); }, 2000);
+
 btn.onclick = () => {
-  if (active) { active = false; rec.stop(); }
-  else start();
+  if (!SR) { setStatus("المتصفح لا يدعم التعرف على الكلام. استخدم Chrome أو Edge."); return; }
+  if (active) { active = false; if (rec) rec.stop(); }
+  else { active = true; btn.textContent = "إيقاف"; startSession(); }
 };
 </script>
 """
@@ -224,7 +229,15 @@ if consent:
         key="interview-monitor",
         video_processor_factory=InterviewProcessor,
         rtc_configuration=RTC_CONFIGURATION,
-        media_stream_constraints={"video": True, "audio": False},
+        media_stream_constraints={
+            "video": {"width": {"ideal": 480}, "height": {"ideal": 360}, "frameRate": {"ideal": 15}},
+            "audio": False,
+        },
+        video_html_attrs={
+            "style": {"width": "480px", "max-width": "100%", "margin": "0 auto", "display": "block"},
+            "controls": False,
+            "autoPlay": True,
+        },
         async_processing=True,
     )
 
