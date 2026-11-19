@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+
 import av
 import cv2
 import mediapipe as mp
@@ -20,7 +21,8 @@ SUSPICIOUS_SECONDS = 0.5
 COOLDOWN_SECONDS = 2.0
 GRACE_SECONDS = 0.7
 
-DETECT_WIDTH = 480        # frames are shrunk to this width before detection (faster)
+DETECT_WIDTH = 320        # frames are shrunk to this width before detection (faster)
+DETECT_EVERY = 3          # run the face model on 1 of every 3 frames (the server is weak)
 MAX_SNAPSHOTS = 12        # snapshots kept in memory for display
 
 # Speech language for the browser (Chrome/Edge): "ar-EG" Egyptian, "ar-SA" Saudi, "en-US" English
@@ -76,29 +78,38 @@ class InterviewProcessor(VideoProcessorBase):
         self.last_saved = 0.0
         self.last_seen_bad = 0.0
 
+        self.frame_i = 0
+        self.cache = (None, None, None)     # last (reason, head, gaze)
+
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        h, w = img.shape[:2]
-        small = cv2.resize(img, (DETECT_WIDTH, int(h * DETECT_WIDTH / w)))
-        rgb = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+        self.frame_i += 1
+        if self.frame_i % DETECT_EVERY == 1:
+            h, w = img.shape[:2]
+            small = cv2.resize(img, (DETECT_WIDTH, int(h * DETECT_WIDTH / w)))
+            rgb = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
 
-        faces = self.landmarker.detect(mp_image).face_landmarks
-        reason = None
+            faces = self.landmarker.detect(mp_image).face_landmarks
+            reason, head, gaze = None, None, None
 
-        if len(faces) == 0:
-            reason = "no_face"
-        elif len(faces) > 1:
-            reason = "multiple_faces"
-        else:
-            head, gaze = analyze_face(faces[0])
+            if len(faces) == 0:
+                reason = "no_face"
+            elif len(faces) > 1:
+                reason = "multiple_faces"
+            else:
+                head, gaze = analyze_face(faces[0])
+                if abs(head) > HEAD_TURN_LIMIT:
+                    reason = "head_turned"
+                elif abs(gaze) > GAZE_LIMIT:
+                    reason = "looking_away"
+            self.cache = (reason, head, gaze)
+
+        reason, head, gaze = self.cache
+        if head is not None:
             cv2.putText(img, f"head={head:.2f} gaze={gaze:.2f}", (20, 80),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
-            if abs(head) > HEAD_TURN_LIMIT:
-                reason = "head_turned"
-            elif abs(gaze) > GAZE_LIMIT:
-                reason = "looking_away"
 
         now = time.time()
 
@@ -230,11 +241,11 @@ if consent:
         video_processor_factory=InterviewProcessor,
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={
-            "video": {"width": {"ideal": 480}, "height": {"ideal": 360}, "frameRate": {"ideal": 15}},
+            "video": {"width": {"ideal": 320}, "height": {"ideal": 240}, "frameRate": {"ideal": 12}},
             "audio": False,
         },
         video_html_attrs={
-            "style": {"width": "480px", "max-width": "100%", "margin": "0 auto", "display": "block"},
+            "style": {"width": "400px", "max-width": "100%", "margin": "0 auto", "display": "block"},
             "controls": False,
             "autoPlay": True,
         },
