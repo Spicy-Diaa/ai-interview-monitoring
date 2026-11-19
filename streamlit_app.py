@@ -28,12 +28,35 @@ MAX_SNAPSHOTS = 12        # snapshots kept in memory for display
 # Speech language for the browser (Chrome/Edge): "ar-EG" Egyptian, "ar-SA" Saudi, "en-US" English
 LANGUAGE_CODE = "ar-EG"
 
-RTC_CONFIGURATION = {
-    "iceServers": [
+def build_rtc_config():
+    """STUN helps most networks connect; TURN relays the video when a network blocks direct connections."""
+    servers = [
         {"urls": ["stun:stun.l.google.com:19302"]},
         {"urls": ["stun:stun1.l.google.com:19302"]},
     ]
-}
+    try:
+        # your own free TURN account (see the steps): put these 2 values in the app's Secrets
+        user = st.secrets["TURN_USERNAME"]
+        cred = st.secrets["TURN_CREDENTIAL"]
+        host = st.secrets.get("TURN_HOST", "global.relay.metered.ca")
+        servers += [
+            {"urls": [f"turn:{host}:80"], "username": user, "credential": cred},
+            {"urls": [f"turn:{host}:80?transport=tcp"], "username": user, "credential": cred},
+            {"urls": [f"turn:{host}:443"], "username": user, "credential": cred},
+            {"urls": [f"turns:{host}:443?transport=tcp"], "username": user, "credential": cred},
+        ]
+    except Exception:
+        # no secrets set: try the public Open Relay test server (may be limited or unavailable)
+        servers.append({
+            "urls": ["turn:openrelay.metered.ca:80", "turn:openrelay.metered.ca:443",
+                     "turn:openrelay.metered.ca:443?transport=tcp"],
+            "username": "openrelayproject",
+            "credential": "openrelayproject",
+        })
+    return {"iceServers": servers}
+
+
+RTC_CONFIGURATION = build_rtc_config()
 
 
 # ---------------- Detection logic (copied from monitor.py) ----------------
