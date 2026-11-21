@@ -13,6 +13,7 @@ from mediapipe.tasks.python import vision
 from streamlit_webrtc import VideoProcessorBase, webrtc_streamer
 from supabase_storage import new_session_id, save_event
 from question_bank import QUESTION_BANK
+from technical_interview import render_technical_interview
 
 # ---------------- Settings (same values as monitor.py) ----------------
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "face_landmarker.task")
@@ -285,6 +286,8 @@ if consent:
         components.html(SPEECH_HTML.replace("__LANG__", lang_code), height=330)
     events_box = st.empty()
     shots_box = st.empty()
+    with st.expander("Technical Interview / المقابلة التقنية", expanded=False):
+        render_technical_interview()
 
     while ctx.state.playing:
         proc = ctx.video_processor
