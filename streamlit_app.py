@@ -54,7 +54,7 @@ def build_rtc_config():
             "username": "openrelayproject",
             "credential": "openrelayproject",
         })
-    return {"iceServers": servers, "iceTransportPolicy": "relay"}
+    return {"iceServers": servers}
 
 
 RTC_CONFIGURATION = build_rtc_config()
