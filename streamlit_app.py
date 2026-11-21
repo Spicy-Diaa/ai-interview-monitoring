@@ -278,8 +278,10 @@ if consent:
 
     if mic_consent:
         # Speech-to-text runs inside the person's own browser (Chrome/Edge), not on the server
-        components.html(SPEECH_HTML.replace("__LANG__", LANGUAGE_CODE), height=330)
-
+                    
+        speech_choice = st.selectbox("Speech language / لغة الكلام", ["العربية (مصر)", "English (US)"])
+        lang_code = "ar-EG" if speech_choice == "العربية (مصر)" else "en-US"
+        components.html(SPEECH_HTML.replace("__LANG__", lang_code), height=330)
     events_box = st.empty()
     shots_box = st.empty()
 
