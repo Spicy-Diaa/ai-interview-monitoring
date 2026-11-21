@@ -289,6 +289,19 @@ if consent:
             with proc.lock:
                 count = proc.events_count
                 shots = list(proc.snapshots)
+                 # --- Save new suspicious screenshots to Supabase ---
+            if "session_id" not in st.session_state:
+                st.session_state["session_id"] = new_session_id()
+                st.session_state["uploaded_count"] = 0
+            if count < st.session_state["uploaded_count"]:
+                st.session_state["uploaded_count"] = 0
+            new_n = count - st.session_state["uploaded_count"]
+            if new_n > 0:
+                for t, reason, jpg in shots[-new_n:]:
+                    ok, err = save_event(st.session_state["session_id"], t, reason, jpg)
+                    if not ok:
+                        st.toast(f"Supabase save failed: {err}")
+                st.session_state["uploaded_count"] = count               
             events_box.metric("Potential events", count)
             with shots_box.container():
                 if shots:
