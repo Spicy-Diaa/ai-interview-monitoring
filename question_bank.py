@@ -77,5 +77,42 @@ QUESTION_BANK = {
                 "keywords": ["caching", "redis", "index", "query", "pagination", "celery", "async", "load balancing"],
             },
         ],
+    },    "Data Analyst": {
+        "Beginner": [
+            {
+                "question": "What is the difference between a primary key and a foreign key in SQL?",
+                "model_answer": "A primary key uniquely identifies each row in a table and cannot be null. A foreign key is a column that refers to the primary key of another table and is used to link tables together.",
+                "keywords": ["primary key", "foreign key", "unique", "table", "link", "relationship", "null"],
+            },
+            {
+                "question": "What is data cleaning and why is it important?",
+                "model_answer": "Data cleaning means fixing or removing incorrect, duplicate, missing, or inconsistent data. It is important because analysis on dirty data gives wrong and misleading results.",
+                "keywords": ["missing", "duplicate", "inconsistent", "errors", "accuracy", "quality", "outliers"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "What is the difference between INNER JOIN and LEFT JOIN?",
+                "model_answer": "INNER JOIN returns only the rows that match in both tables. LEFT JOIN returns all rows from the left table and the matching rows from the right table, with NULL where there is no match.",
+                "keywords": ["inner join", "left join", "match", "null", "rows", "left table", "right table"],
+            },
+            {
+                "question": "How do you handle missing values in a dataset using Pandas?",
+                "model_answer": "First detect them with isnull() and sum(). Then either remove them with dropna() or fill them with fillna() using the mean, median, or a fixed value, depending on the data and how much is missing.",
+                "keywords": ["isnull", "dropna", "fillna", "mean", "median", "missing", "pandas"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "What is the difference between WHERE and HAVING in SQL, and what are window functions?",
+                "model_answer": "WHERE filters rows before grouping, and HAVING filters groups after GROUP BY. Window functions such as ROW_NUMBER, RANK, and SUM OVER perform calculations across related rows without collapsing them into one row.",
+                "keywords": ["where", "having", "group by", "window function", "row_number", "rank", "over", "partition"],
+            },
+            {
+                "question": "How would you design a dashboard to present insights to business stakeholders?",
+                "model_answer": "Start by understanding the business goal and the key KPIs. Choose suitable charts for each metric, keep the design simple and clear, add filters for interactivity, and focus on telling a story with the data using tools like Power BI or Tableau.",
+                "keywords": ["kpi", "business goal", "visualization", "chart", "filter", "storytelling", "power bi", "tableau"],
+            },
+        ],
     },
 }
