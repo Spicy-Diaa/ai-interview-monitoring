@@ -175,7 +175,7 @@ SPEECH_HTML = """
   <span id="status" style="margin-inline-start:12px;color:#666;font-size:14px"></span>
   <div dir="rtl" style="margin-top:12px;padding:12px;border:1px solid #ddd;border-radius:8px;
        min-height:90px;max-height:220px;overflow-y:auto;font-size:22px">
-    <b>الكلام المكتوب</b>
+    <div style="font-size:17px;font-weight:bold;color:#c9304a;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #f3d3d9">🎙️ النص المباشر · Live Transcript</div>
     <div id="lines"></div>
     <div id="interim" style="color:#999"></div>
   </div>
