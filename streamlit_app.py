@@ -11,6 +11,7 @@ import streamlit.components.v1 as components
 from mediapipe.tasks import python as mp_python
 from mediapipe.tasks.python import vision
 from streamlit_webrtc import VideoProcessorBase, webrtc_streamer
+from supabase_storage import new_session_id, save_event
 
 # ---------------- Settings (same values as monitor.py) ----------------
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "face_landmarker.task")
