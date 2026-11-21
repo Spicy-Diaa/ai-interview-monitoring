@@ -227,5 +227,193 @@ QUESTION_BANK = {
                 "keywords": ["api", "fastapi", "docker", "monitoring", "data drift", "retrain", "mlops", "deployment"],
             },
         ],
+    },    "UI/UX Designer": {
+        "Beginner": [
+            {
+                "question": "What is the difference between UI and UX design?",
+                "model_answer": "UI design focuses on how the product looks, such as colors, typography, buttons, and layout. UX design focuses on how the product works and feels for the user, including ease of use, user flow, and solving the user's problems.",
+                "keywords": ["ui", "ux", "visual", "look", "usability", "user experience", "interface", "flow"],
+            },
+            {
+                "question": "What is a wireframe and why do we use it?",
+                "model_answer": "A wireframe is a simple low-fidelity sketch of a screen that shows the layout and structure without colors or final design. It helps teams agree on the structure early and saves time before the detailed design.",
+                "keywords": ["wireframe", "layout", "structure", "low-fidelity", "sketch", "early", "prototype"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "What is user research and which methods can you use?",
+                "model_answer": "User research is understanding the needs, behavior, and problems of users. Common methods include interviews, surveys, usability testing, and observation. It helps make design decisions based on real data instead of assumptions.",
+                "keywords": ["user research", "interviews", "surveys", "usability testing", "needs", "behavior", "personas", "data"],
+            },
+            {
+                "question": "What is the difference between a low-fidelity and a high-fidelity prototype?",
+                "model_answer": "A low-fidelity prototype is a simple and quick version used to test ideas and structure. A high-fidelity prototype looks and behaves very close to the final product, with real colors, content, and interactions, and is used for detailed testing. Tools like Figma are commonly used.",
+                "keywords": ["low-fidelity", "high-fidelity", "prototype", "interaction", "testing", "figma", "final product"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "How do you design an accessible interface?",
+                "model_answer": "Use enough color contrast, do not rely on color alone to give information, support keyboard navigation and screen readers, use readable font sizes, and add text alternatives for images. Follow standards such as WCAG.",
+                "keywords": ["accessibility", "contrast", "wcag", "screen reader", "keyboard", "alt text", "font size", "inclusive"],
+            },
+            {
+                "question": "What is a design system and how do you measure the success of a design?",
+                "model_answer": "A design system is a collection of reusable components, styles, and guidelines that keeps the product consistent and speeds up work. Success is measured with usability testing, A/B testing, and metrics such as task completion rate, time on task, and user satisfaction.",
+                "keywords": ["design system", "components", "consistency", "reusable", "a/b testing", "usability", "metrics", "task completion"],
+            },
+        ],
+    },
+    "Cybersecurity Analyst": {
+        "Beginner": [
+            {
+                "question": "What is the CIA triad in cybersecurity?",
+                "model_answer": "The CIA triad stands for Confidentiality, Integrity, and Availability. Confidentiality means only authorized people can access data. Integrity means data is not changed without permission. Availability means systems and data are accessible when needed.",
+                "keywords": ["confidentiality", "integrity", "availability", "authorized", "data", "access"],
+            },
+            {
+                "question": "What is the difference between a virus, a worm, and a trojan?",
+                "model_answer": "A virus attaches itself to a file and spreads when the file is run. A worm spreads by itself across networks without user action. A trojan pretends to be a useful program but contains malicious code.",
+                "keywords": ["virus", "worm", "trojan", "malware", "spread", "malicious", "network"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "What is SQL injection and how can you prevent it?",
+                "model_answer": "SQL injection is an attack where the attacker inserts malicious SQL code into an input field to access or change the database. It is prevented by using parameterized queries or prepared statements, validating inputs, and using least privilege for database accounts.",
+                "keywords": ["sql injection", "input", "parameterized", "prepared statements", "validation", "database", "least privilege"],
+            },
+            {
+                "question": "What is the difference between symmetric and asymmetric encryption?",
+                "model_answer": "Symmetric encryption uses one shared key for both encryption and decryption and is fast, like AES. Asymmetric encryption uses a public key and a private key, like RSA, and is used for secure key exchange and digital signatures.",
+                "keywords": ["symmetric", "asymmetric", "public key", "private key", "aes", "rsa", "encryption", "decryption"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "Explain the main steps of a penetration test.",
+                "model_answer": "The main steps are planning and scoping, reconnaissance, scanning and vulnerability discovery, exploitation, post-exploitation, and reporting. The final report explains the findings and recommends fixes. The test must be done with written permission.",
+                "keywords": ["reconnaissance", "scanning", "exploitation", "reporting", "scope", "permission", "vulnerability", "post-exploitation"],
+            },
+            {
+                "question": "How do you respond to a security incident?",
+                "model_answer": "Follow an incident response process: preparation, detection and analysis, containment, eradication, recovery, and lessons learned. Isolate affected systems, preserve logs and evidence, remove the threat, restore systems safely, and document everything. Tools such as a SIEM help with detection.",
+                "keywords": ["incident response", "detection", "containment", "eradication", "recovery", "lessons learned", "siem", "logs"],
+            },
+        ],
+    },
+    "QA Engineer": {
+        "Beginner": [
+            {
+                "question": "What is the difference between manual testing and automated testing?",
+                "model_answer": "Manual testing is done by a person who runs the test steps by hand and is good for exploratory and usability testing. Automated testing uses scripts and tools such as Selenium to run tests automatically, which is faster and better for repetitive tests.",
+                "keywords": ["manual", "automated", "scripts", "selenium", "repetitive", "exploratory", "faster"],
+            },
+            {
+                "question": "What is a test case and what does it contain?",
+                "model_answer": "A test case is a set of steps used to check that a feature works correctly. It contains an ID, description, preconditions, test steps, test data, expected result, and actual result.",
+                "keywords": ["test case", "steps", "expected result", "actual result", "preconditions", "test data", "id"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "What is the difference between smoke testing and regression testing?",
+                "model_answer": "Smoke testing is a quick check of the main functions to see if a build is stable enough for further testing. Regression testing checks that new changes did not break existing features.",
+                "keywords": ["smoke", "regression", "build", "stable", "existing features", "new changes", "main functions"],
+            },
+            {
+                "question": "What information should a good bug report include?",
+                "model_answer": "A good bug report includes a clear title, steps to reproduce, expected result, actual result, severity and priority, environment details, and screenshots or logs.",
+                "keywords": ["title", "steps to reproduce", "expected", "actual", "severity", "priority", "environment", "screenshot"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "How do you design an automation testing strategy for a project?",
+                "model_answer": "Decide what to automate: stable, repetitive, and high-risk tests. Follow the test pyramid with many unit tests, fewer API tests, and few UI tests. Use a framework like Selenium with a Page Object Model, and integrate the tests into a CI/CD pipeline.",
+                "keywords": ["test pyramid", "selenium", "page object model", "ci/cd", "framework", "repetitive", "high-risk", "api tests"],
+            },
+            {
+                "question": "What is the difference between severity and priority, and how do you do performance testing?",
+                "model_answer": "Severity is how serious the impact of the bug is on the system. Priority is how urgently it should be fixed. Performance testing checks speed and stability under load using tools such as JMeter, including load testing and stress testing.",
+                "keywords": ["severity", "priority", "impact", "urgency", "performance", "load testing", "stress testing", "jmeter"],
+            },
+        ],
+    },    "Database Administrator": {
+        "Beginner": [
+            {
+                "question": "What is a database and what is the difference between SQL and NoSQL databases?",
+                "model_answer": "A database is an organized collection of data. SQL databases such as MySQL and PostgreSQL store data in tables with a fixed schema and use SQL. NoSQL databases such as MongoDB store data in flexible formats like documents and are good for unstructured data and easy scaling.",
+                "keywords": ["database", "sql", "nosql", "tables", "schema", "mysql", "postgresql", "mongodb", "flexible"],
+            },
+            {
+                "question": "What is a primary key and why is it important?",
+                "model_answer": "A primary key is a column or a set of columns that uniquely identifies each row in a table. It cannot be null or duplicated, and it is used to link tables and find rows quickly.",
+                "keywords": ["primary key", "unique", "row", "null", "duplicate", "identify", "table"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "What is an index and when should you use it?",
+                "model_answer": "An index is a data structure that makes searching in a table faster, like the index of a book. It is useful for columns used in WHERE and JOIN conditions. However, too many indexes slow down insert and update operations and use more storage.",
+                "keywords": ["index", "faster", "search", "where", "join", "slow", "insert", "update", "storage"],
+            },
+            {
+                "question": "What is database normalization?",
+                "model_answer": "Normalization is organizing data into separate related tables to reduce duplication and avoid inconsistency. It follows rules called normal forms such as 1NF, 2NF, and 3NF. Too much normalization can make queries slower because they need more joins.",
+                "keywords": ["normalization", "duplication", "redundancy", "normal forms", "1nf", "2nf", "3nf", "consistency", "joins"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "What are ACID properties and what is a transaction?",
+                "model_answer": "A transaction is a group of operations that run as one unit. ACID stands for Atomicity, Consistency, Isolation, and Durability. Atomicity means all or nothing, consistency keeps data valid, isolation keeps transactions from affecting each other, and durability means committed data is not lost.",
+                "keywords": ["transaction", "acid", "atomicity", "consistency", "isolation", "durability", "commit", "rollback"],
+            },
+            {
+                "question": "How do you plan backup, recovery, and performance tuning for a production database?",
+                "model_answer": "Take regular full and incremental backups, store copies in a different location, and test the restore process. Use replication for high availability. For performance, analyze slow queries with EXPLAIN, add suitable indexes, and monitor resources like CPU, memory, and disk.",
+                "keywords": ["backup", "recovery", "restore", "replication", "high availability", "explain", "slow queries", "index", "monitoring"],
+            },
+        ],
+    },
+    "Full-Stack Developer": {
+        "Beginner": [
+            {
+                "question": "What is the difference between front-end and back-end development?",
+                "model_answer": "Front-end is the part the user sees and interacts with in the browser, built with HTML, CSS, and JavaScript. Back-end runs on the server and handles business logic, databases, and authentication. A full-stack developer works on both.",
+                "keywords": ["front-end", "back-end", "browser", "server", "database", "logic", "html", "css", "javascript"],
+            },
+            {
+                "question": "What is the difference between GET and POST HTTP methods?",
+                "model_answer": "GET is used to request and read data and does not change anything on the server. POST is used to send data to the server to create something new, and the data is sent in the request body.",
+                "keywords": ["get", "post", "http", "request", "read", "create", "body", "server"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "How does a React front-end communicate with a Node.js back-end?",
+                "model_answer": "React sends HTTP requests using fetch or axios to REST API endpoints built with Node.js and Express. The server processes the request, talks to the database such as MongoDB, and returns JSON data that React displays in the interface.",
+                "keywords": ["react", "node", "express", "api", "fetch", "axios", "json", "mongodb", "endpoint"],
+            },
+            {
+                "question": "What is the difference between authentication and authorization?",
+                "model_answer": "Authentication verifies who the user is, for example with a login using a password or token. Authorization decides what that user is allowed to do or access, for example admin versus normal user permissions.",
+                "keywords": ["authentication", "authorization", "login", "token", "jwt", "permissions", "role", "identity"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "How would you design and deploy a scalable full-stack application?",
+                "model_answer": "Separate the front-end, back-end API, and database. Use caching and a load balancer, add database indexes, and containerize the app with Docker. Set up a CI/CD pipeline for automatic testing and deployment, and add monitoring and logging.",
+                "keywords": ["scalable", "load balancer", "caching", "docker", "ci/cd", "database", "monitoring", "logging", "api"],
+            },
+            {
+                "question": "How do you secure a full-stack web application?",
+                "model_answer": "Use HTTPS, hash passwords, and protect APIs with JWT or session authentication and role-based authorization. Validate and sanitize all inputs to prevent SQL injection and XSS, use CSRF protection, configure CORS correctly, and never store secrets in the front-end code.",
+                "keywords": ["https", "hash", "jwt", "authorization", "sql injection", "xss", "csrf", "cors", "validation"],
+            },
+        ],
     },
 }
