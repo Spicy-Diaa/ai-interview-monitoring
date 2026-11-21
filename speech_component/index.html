@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; font-family: Arial, sans-serif; }
+  #btn { padding: 10px 18px; font-size: 16px; border: 0; border-radius: 6px;
+         background: #c9304a; color: #fff; cursor: pointer; }
+  #status { margin-left: 12px; margin-right: 12px; color: #666; font-size: 14px; }
+  #box { margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+         min-height: 70px; max-height: 130px; overflow-y: auto; font-size: 18px; }
+  #interim { color: #999; }
+</style>
+</head>
+<body>
+  <button id="btn">ابدأ الإجابة</button>
+  <span id="status"></span>
+  <div id="box" dir="auto"><span id="final"></span><span id="interim"></span></div>
+
+<script>
+function send(type, data) {
+  window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type: type }, data), "*");
+}
+
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const btn = document.getElementById("btn");
+const statusEl = document.getElementById("status");
+const finalEl = document.getElementById("final");
+const interimEl = document.getElementById("interim");
+
+let lang = "en-US";
+let finalText = "";
+let rec = null, active = false, running = false;
+
+function setStatus(t) { statusEl.textContent = t; }
+
+function sendValue() {
+  send("streamlit:setComponentValue", { value: finalText, dataType: "json" });
+}
+
+function startSession() {
+  if (!active || running) return;
+  rec = new SR();
+  rec.lang = lang;
+  rec.continuous = true;
+  rec.interimResults = true;
+  rec.onstart = function () { running = true; setStatus("🎤 يستمع... اتكلم"); };
+  rec.onresult = function (e) {
+    let interim = "";
+    let gotFinal = false;
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const r = e.results[i];
+      if (r.isFinal) {
+        finalText += (finalText ? " " : "") + r[0].transcript.trim();
+        gotFinal = true;
+      } else {
+        interim += r[0].transcript;
+      }
+    }
+    finalEl.textContent = finalText;
+    interimEl.textContent = interim ? " " + interim : "";
+    if (gotFinal) sendValue();
+  };
+  rec.onerror = function (e) {
+    if (e.error === "no-speech" || e.error === "aborted") return;
+    setStatus("خطأ: " + e.error);
+    if (e.error === "not-allowed" || e.error === "service-not-allowed") active = false;
+  };
+  rec.onend = function () {
+    running = false;
+    interimEl.textContent = "";
+    if (active) { setTimeout(startSession, 300); }
+    else { setStatus("متوقف"); btn.textContent = "ابدأ الإجابة"; sendValue(); }
+  };
+  try { rec.start(); } catch (_) { running = false; }
+}
+
+setInterval(function () { if (active && !running) startSession(); }, 2000);
+
+btn.onclick = function () {
+  if (!SR) { setStatus("المتصفح لا يدعم التعرف على الكلام. استخدم Chrome أو Edge."); return; }
+  if (active) { active = false; if (rec) rec.stop(); }
+  else { active = true; btn.textContent = "إيقاف"; startSession(); }
+};
+
+window.addEventListener("message", function (event) {
+  if (event.data && event.data.type === "streamlit:render") {
+    const args = event.data.args || {};
+    if (args.lang) lang = args.lang;
+  }
+});
+
+send("streamlit:componentReady", { apiVersion: 1 });
+send("streamlit:setFrameHeight", { height: 190 });
+</script>
+</body>
+</html>
