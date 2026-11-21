@@ -40,5 +40,42 @@ QUESTION_BANK = {
                 "keywords": ["closure", "scope", "event loop", "call stack", "callback", "queue", "async"],
             },
         ],
+    },    "Python Back-End Developer": {
+        "Beginner": [
+            {
+                "question": "What is the difference between a list and a tuple in Python?",
+                "model_answer": "A list is mutable, so you can change its items after creation. A tuple is immutable, so it cannot be changed. Tuples are slightly faster and can be used as dictionary keys.",
+                "keywords": ["mutable", "immutable", "list", "tuple", "change", "faster"],
+            },
+            {
+                "question": "What is an API and what is REST?",
+                "model_answer": "An API lets two programs communicate with each other. REST is a style of building APIs that uses HTTP methods like GET, POST, PUT, and DELETE to work with resources identified by URLs.",
+                "keywords": ["api", "rest", "http", "get", "post", "put", "delete", "resource", "url"],
+            },
+        ],
+        "Intermediate": [
+            {
+                "question": "What is the difference between Django and Flask?",
+                "model_answer": "Django is a full-featured framework that includes an ORM, authentication, and an admin panel out of the box. Flask is a lightweight micro-framework that gives more flexibility, and you add the extensions you need.",
+                "keywords": ["django", "flask", "orm", "admin", "lightweight", "framework", "flexibility"],
+            },
+            {
+                "question": "What is an ORM and why do we use it?",
+                "model_answer": "An ORM maps database tables to Python classes, so you can work with the database using Python objects instead of raw SQL. It improves productivity, reduces SQL mistakes, and helps prevent SQL injection.",
+                "keywords": ["orm", "database", "table", "class", "object", "sql", "injection", "model"],
+            },
+        ],
+        "Advanced": [
+            {
+                "question": "How do you secure a REST API?",
+                "model_answer": "Use HTTPS, authenticate users with tokens such as JWT or OAuth, authorize access by role, validate all inputs, apply rate limiting, and protect against SQL injection and CORS misconfiguration.",
+                "keywords": ["https", "jwt", "oauth", "authentication", "authorization", "rate limiting", "validation", "cors"],
+            },
+            {
+                "question": "How can you improve the performance of a backend application?",
+                "model_answer": "Add caching with Redis, optimize database queries and add indexes, use pagination, run slow tasks in the background with a queue like Celery, use async code, and apply load balancing.",
+                "keywords": ["caching", "redis", "index", "query", "pagination", "celery", "async", "load balancing"],
+            },
+        ],
     },
 }
