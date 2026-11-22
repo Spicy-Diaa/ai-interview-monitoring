@@ -7,6 +7,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from question_bank import QUESTION_BANK
+from keyword_synonyms import keyword_present
 
 # تحميل صندوق الكلام (الملف speech_component/index.html)
 _COMPONENT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "speech_component")
@@ -24,8 +25,8 @@ def _reset_interview():
 def evaluate_answer(answer, keywords):
     """تقييم بسيط بالكلمات المفتاحية. بيرجع: الدرجة، الكلمات الموجودة، الكلمات الناقصة"""
     text = (answer or "").lower()
-    found = [k for k in keywords if k.lower() in text]
-    missing = [k for k in keywords if k.lower() not in text]
+    found = [k for k in keywords if keyword_present(k, answer)]
+    missing = [k for k in keywords if not keyword_present(k, answer)]
     coverage = len(found) / len(keywords) if keywords else 0
 
     words_count = len(text.split())
