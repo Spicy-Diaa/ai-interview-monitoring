@@ -54,7 +54,7 @@ def _grade_label(score):
     return "ضعيف"
 
 
-def render_technical_interview():
+def render_technical_interview(auto_start=False):
     st.header("Technical Interview / المقابلة التقنية")
 
     state = PREFIX + "state"
@@ -66,7 +66,7 @@ def render_technical_interview():
         track = st.selectbox("Specialization / التخصص", list(QUESTION_BANK.keys()))
         level = st.selectbox("Level / المستوى", ["Beginner", "Intermediate", "Advanced"])
         speech_lang = st.selectbox("Answer language / لغة الإجابة", ["English (US)", "العربية (مصر)"])
-        if st.button("Start Technical Interview"):
+        if auto_start or st.button("Start Technical Interview"):
             st.session_state[PREFIX + "track"] = track
             st.session_state[PREFIX + "level"] = level
             st.session_state[PREFIX + "lang"] = "en-US" if speech_lang == "English (US)" else "ar-EG"
@@ -89,6 +89,7 @@ def render_technical_interview():
 
         answer_text = speech_answer(
             lang=st.session_state[PREFIX + "lang"],
+            autostart=True,
             key=f"{PREFIX}speech_{idx}",
             default="",
         )
