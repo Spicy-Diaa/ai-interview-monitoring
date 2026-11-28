@@ -31,6 +31,7 @@ const interimEl = document.getElementById("interim");
 let lang = "en-US";
 let finalText = "";
 let rec = null, active = false, running = false;
+let autoStarted = false;
 
 function setStatus(t) { statusEl.textContent = t; }
 
@@ -87,6 +88,12 @@ window.addEventListener("message", function (event) {
   if (event.data && event.data.type === "streamlit:render") {
     const args = event.data.args || {};
     if (args.lang) lang = args.lang;
+    if (args.autostart && !autoStarted && SR) {
+      autoStarted = true;
+      active = true;
+      btn.textContent = "إيقاف";
+      startSession();
+    }
   }
 });
 
