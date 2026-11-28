@@ -259,7 +259,7 @@ st.info(
 )
 
 consent = st.checkbox("I consent to webcam monitoring")
-mic_consent = st.checkbox("Also record my voice and convert it to text (microphone)")
+
 
 if consent:
     ctx = webrtc_streamer(
@@ -278,12 +278,7 @@ if consent:
         async_processing=True,
     )
 
-    if mic_consent:
-        # Speech-to-text runs inside the person's own browser (Chrome/Edge), not on the server
-                    
-        speech_choice = st.selectbox("Speech language / لغة الكلام", ["العربية (مصر)", "English (US)"])
-        lang_code = "ar-EG" if speech_choice == "العربية (مصر)" else "en-US"
-        components.html(SPEECH_HTML.replace("__LANG__", lang_code), height=330)
+    
     events_box = st.empty()
     shots_box = st.empty()
     with st.expander("Technical Interview / المقابلة التقنية", expanded=False):
