@@ -281,8 +281,7 @@ if consent:
     
     events_box = st.empty()
     shots_box = st.empty()
-    with st.expander("Technical Interview / المقابلة التقنية", expanded=False):
-        render_technical_interview()
+    render_technical_interview(auto_start=ctx.state.playing)
 
     while ctx.state.playing:
         proc = ctx.video_processor
