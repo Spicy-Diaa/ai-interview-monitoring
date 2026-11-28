@@ -66,7 +66,7 @@ def render_technical_interview(auto_start=False):
         track = st.selectbox("Specialization / التخصص", list(QUESTION_BANK.keys()))
         level = st.selectbox("Level / المستوى", ["Beginner", "Intermediate", "Advanced"])
         speech_lang = st.selectbox("Answer language / لغة الإجابة", ["English (US)", "العربية (مصر)"])
-        if auto_start or st.button("Start Technical Interview"):
+        if auto_start or st.button("Start Technical Interview", disabled=True):
             st.session_state[PREFIX + "track"] = track
             st.session_state[PREFIX + "level"] = level
             st.session_state[PREFIX + "lang"] = "en-US" if speech_lang == "English (US)" else "ar-EG"
@@ -82,6 +82,9 @@ def render_technical_interview(auto_start=False):
 
     # ---------- 2) الأسئلة ----------
     if st.session_state[state] == "running":
+        if not auto_start:
+            st.warning("📷 الكاميرا واقفة. اضغط START عشان تكمل المقابلة قدام الكاميرا.")
+            return
         q = questions[idx]
         st.progress(idx / len(questions))
         st.subheader(f"Question {idx + 1} of {len(questions)}")
